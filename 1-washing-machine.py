@@ -100,12 +100,10 @@ async def main():
     async with aiomqtt.Client("test.mosquitto.org") as client:
         await asyncio.gather(license(w1, client), CoroWashingMachine(w1, client), listen(w1, client))
     
-    # Change to the "Selector" event loop if platform is Windows
-    if sys.platform.lower() == "win32" or os.name.lower() == "nt":
-        from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
-        set_event_loop_policy(WindowsSelectorEventLoopPolicy())
-    
-    # Run your async application as usual
-    asyncio.run(main())
+# Change to the "Selector" event loop if platform is Windows
+if sys.platform.lower() == "win32" or os.name.lower() == "nt":
+    from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
+    set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+
 
 asyncio.run(main())
